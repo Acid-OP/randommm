@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "Gaurav123";
-mongoose.connect("mongodb+srv://Cluster0:gaurav23@cluster0.kobs3.mongodb.net/todos-app-databse");
+mongoose.connect("yourdatabse URL");
 app.post("/signup", async function(req,res){
     const email = req.body.email;
     const password = req.body.password;
