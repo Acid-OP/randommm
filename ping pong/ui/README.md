@@ -1,50 +1,64 @@
-# React + TypeScript + Vite
+# WebSocket Ping-Pong (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **React frontend** for a real-time singleplayer Ping-Pong game, where players can interact via WebSocket for seamless communication with the server. The game features a simple setup  real-time updates with an alert. It communicates with a WebSocket server for syncing the game state between players.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **WebSocket Connectivity:** Establishes a WebSocket connection to the backend to synchronize game state between players.
+- **Send Messages via WebSocket:** Allows sending messages to the server through a text input field.
+- **Real-Time Feedback:** Alerts the user when messages are received from the server.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend:** React.js
+- **WebSocket:** For real-time communication with the server
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Clone the Repository
+
+```bash
+git clone https://github.com/your-username/websocket-pingpong.git
+cd websocket-pingpong
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Frontend Setup
+Navigate to the project directory:
+```bash
+cd frontend
 ```
+Install dependencies:
+```bash
+npm install
+```
+Start the React application:
+```bash
+npm start
+```
+The React app will be available at http://localhost:3000
+
+WebSocket Connection
+The app connects to the WebSocket server at ws://localhost:8080. Once connected, the client can send and receive game data such as player positions, scores, and game events. This communication happens in real-time through WebSocket messages.
+
+How It Works
+WebSocket Connection: The app connects to the WebSocket server as soon as the component mounts (useEffect).
+```javascript
+const ws = new WebSocket("ws://localhost:8080");
+setSocket(ws);
+```
+Sending Messages: Users can type a message in the input field and click "Send" to send the message to the WebSocket server. The message is transmitted using:
+
+```javascript
+socket.send(message);
+Receiving Messages: Whenever the WebSocket server sends a message (such as game state updates), the app receives it through the onmessage event handler and displays it via an alert:
+```
+```javascript
+ws.onmessage = (ev) => {
+  alert(ev.data);
+};
+```
+React State & Refs: The app uses useState to manage the WebSocket connection and useRef to reference the input field.
+
+License
+This project is licensed under the MIT License.
+
