@@ -6,32 +6,30 @@ interface User{
     room:string
 }
 
-let allsockets = [];
-wss.on("connection" , (socket) => {
-    socket.on("message" , (message) => {
-        // @ts-ignore 
-        const parsedMessage = JSON.parse(message);    
-        
-        if(parsedMessage.type === "join"){
-            allsockets.push({
-                socket,
-                room : parsedMessage.payload.roomId
-            })
+let rooms:{ [roomId: string]: WebSocket[] } = {};
+
+wss.on("connection",(socket:WebSocket) => {
+    socket.on("message",(message:string) => {
+        const data = JSON.parse(message);
+        const {type , payload} = data;
+
+        if(type === "join"){
+            const{roomId} = payload;
+            if(!rooms[roomId]){
+                rooms[roomId] = [];
+            }
+            rooms[roomId].push(socket);
+            (socket as any).roomId = roomId;
+            
         }
 
-        if(parsedMessage.type === "chat"){
-            let currentUserRoom = null;
-            for(let i=0; i<allsockets.length; i++){
-                if(allsockets[i].socket === socket){
-                    currentUserRoom = allsockets[i].room
-                }
+        if(type === "chat"){
+            const{message:ChatMessage} = payload;
+            const room = rooms[(socket as any).roomId];
+            if(room){
+                room.forEach((user) => {
+                    user.send(ChatMessage);
+                })
             }
-
-            for(let i=0 ; i<allsockets.length;i++){
-                if(allsockets[i].room === currentUserRoom){
-                    allsockets[i].socket.send(parsedMessage.payload.message)
-                }
-            }
-        }
-})
+}})
 })
