@@ -1,0 +1,74 @@
+/* react-frontend/src/App.css */
+
+body {
+  font-family: 'Arial, sans-serif';
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #f9f9f9;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.product-item {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.load-more-button {
+  display: block;
+  margin: 30px auto 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.load-more-button:hover {
+  background-color: #218838;
+}
+
+.loading,
+.error,
+.no-more {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.loading {
+  color: #555;
+}
+
+.error {
+  color: #dc3545;
+}
+
+.no-more {
+  color: #888;
+}
