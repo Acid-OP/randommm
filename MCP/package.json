@@ -1,0 +1,16 @@
+{
+  "name": "mcp",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@linear/sdk": "^71.0.0",
+    "@modelcontextprotocol/sdk": "^1.25.3"
+  }
+}
