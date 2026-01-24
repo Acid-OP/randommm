@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { LinearClient } from "@linear/sdk";
+import { registerListTeams } from "./tools/list-teams.js";
 
 const apiKey = process.env.LINEAR_API_KEY;
 if (!apiKey) {
@@ -13,6 +14,8 @@ const server = new McpServer({
     name: "linear",
     version: "1.0.0"
 });
+
+registerListTeams(server, linearClient);
 
 async function main(){
     const transport = new StdioServerTransport();
