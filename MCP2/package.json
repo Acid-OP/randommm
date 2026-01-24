@@ -1,0 +1,19 @@
+{
+  "name": "mcp2",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@linear/sdk": "^71.0.0",
+    "@modelcontextprotocol/sdk": "^1.25.3"
+  }
+}

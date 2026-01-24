@@ -3,10 +3,6 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { NWS_API_BASE, makeNWSRequest, formatAlert } from "../utils.js";
 import type { AlertsResponse } from "../types.js";
 
-/**
- * Register the get_alerts tool
- * This tool fetches active weather alerts for a given US state
- */
 export function registerGetAlerts(server: McpServer) {
   server.registerTool(
     "get_alerts",
