@@ -5,6 +5,7 @@ import { registerListTeams } from "./tools/list-teams.js";
 import { registerListIssues } from "./tools/list-issues.js";
 import { registerCreateIssue } from "./tools/create-issue.js";
 import { registerUpdateIssue } from "./tools/update-issue.js";
+import { registerAddComment } from "./tools/add-comment.js";
 
 const apiKey = process.env.LINEAR_API_KEY;
 if (!apiKey) {
@@ -22,6 +23,7 @@ registerListTeams(server, linearClient);
 registerListIssues(server, linearClient);
 registerCreateIssue(server, linearClient);
 registerUpdateIssue(server, linearClient);
+registerAddComment(server, linearClient);
 async function main(){
     const transport = new StdioServerTransport();
     await server.connect(transport);

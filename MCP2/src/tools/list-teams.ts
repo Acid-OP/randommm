@@ -12,7 +12,6 @@ export function registerListTeams(server: McpServer, linearClient: LinearClient)
         async () => {
             const teams = await linearClient.teams();
             const formattedTeams = teams.nodes.map(formatTeam);
-
             return {
                 content: [
                     {
