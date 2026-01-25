@@ -13,51 +13,48 @@ function App() {
   const [status, setStatus] = useState<string>('');
   const [result, setResult] = useState<string>('');
 
-  // Submit task
   const submitTask = async (): Promise<void> => {
-    console.log('📝 Submitting task:', taskName);
+    console.log('Submitting task:', taskName);
 
     const response = await fetch('http://localhost:3001/submit-task', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         taskName: taskName,
-        webhookUrl: 'http://localhost:3002/webhook' // ← Service B endpoint
+        webhookUrl: 'http://localhost:3002/webhook'
       })
     });
 
     const data: TaskResponse = await response.json();
 
-    console.log('✅ Task submitted:', data);
+    console.log('Task submitted:', data);
 
     setTaskId(data.taskId);
     setStatus(data.status);
 
-    // Start polling status
     pollTaskStatus(data.taskId);
   };
 
-  // Poll for task status
   const pollTaskStatus = async (id: string): Promise<void> => {
     const interval = setInterval(async () => {
       const response = await fetch(`http://localhost:3001/task/${id}`);
       const data: TaskResponse = await response.json();
 
-      console.log('🔄 Task status:', data.status);
+      console.log('Task status:', data.status);
 
       setStatus(data.status);
 
       if (data.status === 'completed') {
         setResult(data.result || '');
         clearInterval(interval);
-        console.log('✅ Task completed!');
+        console.log('Task completed!');
       }
     }, 1000);
   };
 
   return (
     <div className="app">
-      <h1>🔔 Simple Webhook Demo</h1>
+      <h1>Simple Webhook Demo</h1>
 
       <div className="card">
         <h2>Submit a Task</h2>
@@ -83,7 +80,7 @@ function App() {
       </div>
 
       <div className="explanation">
-        <h3>📚 What's Happening:</h3>
+        <h3>What's Happening:</h3>
         <ol>
           <li>You submit a task</li>
           <li><strong>Service A</strong> creates the task</li>
@@ -97,7 +94,7 @@ function App() {
         </ol>
 
         <div className="note">
-          <p><strong>💡 Key Point:</strong></p>
+          <p><strong>Key Point:</strong></p>
           <p>The webhook allows Service A to notify Service B when task is done,
           without Service B constantly checking (polling).</p>
         </div>

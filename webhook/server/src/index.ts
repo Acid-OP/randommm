@@ -35,7 +35,6 @@ app.post('/submit-task', async(req,res)=> {
   processTaskAsync(taskId);
 });
 
-// Get task status
 app.get('/task/:id', (req: Request, res: Response) => {
   const taskId = req.params.id as string;
   const task = tasks[taskId];
@@ -58,7 +57,7 @@ async function processTaskAsync(taskId:string) {
   tasks[taskId].result = `Result for ${tasks[taskId].name}`;
   tasks[taskId].completedAt = new Date();
   
-  console.log('✅ Task completed:', taskId);
+  console.log('Task completed:', taskId);
   await Sendwebhook(taskId);
 }
 
@@ -77,12 +76,10 @@ async function Sendwebhook(taskId : string){
     result: task.result,
     timestamp: new Date().toISOString()
   };
-  
-  // Create signature
+
   const secret = 'my_webhook_secret_123';
   const signature = createSignature(payload, secret);
-  
-  // Send HTTP POST
+
   try {
     const response = await fetch(webhookUrl, {
       method: 'POST',
@@ -95,12 +92,12 @@ async function Sendwebhook(taskId : string){
     });
     
     if (response.ok) {
-      console.log('✅ Webhook sent successfully');
+      console.log('Webhook sent successfully');
     } else {
-      console.log('❌ Webhook failed:', response.status);
+      console.log('Webhook failed:', response.status);
     }
   } catch (error: any) {
-    console.error('❌ Webhook error:', error.message);
+    console.error('Webhook error:', error.message);
   }
 }
 function createSignature(payload: any, secret: string): string {
